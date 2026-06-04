@@ -26,7 +26,7 @@ Once installed for your tool of choice, your AI assistant will:
 **Option A — Plugin (recommended)**
 
 ```bash
-claude plugin install git@github.com:jaydemetillo/ogo-design-system-skill.git
+claude plugin install git@github.com:jaydemetillo/ogp-design-system-skill.git
 ```
 
 Then activate in any conversation:
@@ -38,13 +38,13 @@ Then activate in any conversation:
 
 ```bash
 mkdir -p .claude/skills/ogp-design-test-skill
-git clone --depth 1 git@github.com:jaydemetillo/ogo-design-system-skill.git /tmp/ogp-skill
+git clone --depth 1 git@github.com:jaydemetillo/ogp-design-system-skill.git /tmp/ogp-skill
 cp -r /tmp/ogp-skill/{SKILL.md,references,ui_kit} .claude/skills/ogp-design-test-skill/
 ```
 
 **Option C — Zip download**
 
-Download [`ogp-design-system-skill-v1.0.0.zip`](https://github.com/jaydemetillo/ogo-design-system-skill/releases/latest) from Releases, then:
+Download [`ogp-design-system-skill-v1.0.0.zip`](https://github.com/jaydemetillo/ogp-design-system-skill/releases/latest) from Releases, then:
 
 ```bash
 unzip ogp-design-system-skill-v1.0.0.zip -d .claude/skills/ogp-design-test-skill/
@@ -58,7 +58,7 @@ unzip ogp-design-system-skill-v1.0.0.zip -d .claude/skills/ogp-design-test-skill
 
 ```bash
 mkdir -p .cursor/rules
-curl -fsSL https://raw.githubusercontent.com/jaydemetillo/ogo-design-system-skill/main/.cursor/rules/ogp-design-system.mdc \
+curl -fsSL https://raw.githubusercontent.com/jaydemetillo/ogp-design-system-skill/main/.cursor/rules/ogp-design-system.mdc \
   -o .cursor/rules/ogp-design-system.mdc
 ```
 
@@ -67,7 +67,7 @@ The rule auto-attaches whenever you open `.tsx`, `.jsx`, `.css`, `.scss`, or `.h
 **Option B — Clone and copy**
 
 ```bash
-git clone --depth 1 git@github.com:jaydemetillo/ogo-design-system-skill.git /tmp/ogp-skill
+git clone --depth 1 git@github.com:jaydemetillo/ogp-design-system-skill.git /tmp/ogp-skill
 mkdir -p .cursor/rules
 cp /tmp/ogp-skill/.cursor/rules/ogp-design-system.mdc .cursor/rules/
 ```
@@ -87,7 +87,7 @@ Commit the `.cursor/rules/` folder to your repository so your whole team gets th
 
 ```bash
 # From your project root
-curl -fsSL https://raw.githubusercontent.com/jaydemetillo/ogo-design-system-skill/main/AGENTS.md \
+curl -fsSL https://raw.githubusercontent.com/jaydemetillo/ogp-design-system-skill/main/AGENTS.md \
   -o AGENTS.md
 ```
 
@@ -97,14 +97,14 @@ Codex automatically reads `AGENTS.md` from the Git root and any parent directory
 
 ```bash
 mkdir -p ~/.codex
-curl -fsSL https://raw.githubusercontent.com/jaydemetillo/ogo-design-system-skill/main/AGENTS.md \
+curl -fsSL https://raw.githubusercontent.com/jaydemetillo/ogp-design-system-skill/main/AGENTS.md \
   -o ~/.codex/AGENTS.md
 ```
 
 **Option C — Clone and copy**
 
 ```bash
-git clone --depth 1 git@github.com:jaydemetillo/ogo-design-system-skill.git /tmp/ogp-skill
+git clone --depth 1 git@github.com:jaydemetillo/ogp-design-system-skill.git /tmp/ogp-skill
 
 # Project-level
 cp /tmp/ogp-skill/AGENTS.md ./AGENTS.md
@@ -120,7 +120,7 @@ mkdir -p ~/.codex && cp /tmp/ogp-skill/AGENTS.md ~/.codex/AGENTS.md
 ## Repository layout
 
 ```
-ogo-design-system-skill/
+ogp-design-system-skill/
 ├── README.md                              ← you are here
 ├── SKILL.md                               ← Claude Code skill entry point
 ├── AGENTS.md                              ← OpenAI Codex CLI instructions

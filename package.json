@@ -1,5 +1,5 @@
 {
-  "name": "ogo-design-system-skill",
+  "name": "ogp-design-system-skill",
   "version": "1.1.0",
   "description": "AI coding agent instructions for the OGP (Open Government Products) Base Design System — Claude Code, Cursor, and OpenAI Codex support for building accessible, on-brand Singapore Government digital product UI",
   "main": "SKILL.md",
@@ -23,12 +23,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jaydemetillo/ogo-design-system-skill.git"
+    "url": "git+https://github.com/jaydemetillo/ogp-design-system-skill.git"
   },
   "bugs": {
-    "url": "https://github.com/jaydemetillo/ogo-design-system-skill/issues"
+    "url": "https://github.com/jaydemetillo/ogp-design-system-skill/issues"
   },
-  "homepage": "https://github.com/jaydemetillo/ogo-design-system-skill#readme",
+  "homepage": "https://github.com/jaydemetillo/ogp-design-system-skill#readme",
   "files": [
     "SKILL.md",
     "AGENTS.md",
