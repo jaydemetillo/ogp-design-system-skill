@@ -1,0 +1,211 @@
+/* ============================================================================
+   OGP Base Design System — Tokens
+   Reconstructed from "[OGP] Base Design System.fig".
+
+   This is a THEMEABLE system. Global colours (blue/grey/green/red/yellow + your
+   brand.primary / brand.secondary) are the *source*; you never apply them
+   directly. You apply SEMANTIC tokens (interaction.main, base.content.strong,
+   utility.feedback.*) which point at the global scale. Re-theme a product by
+   swapping what brand.primary/secondary resolve to — semantic names stay put.
+
+   Values below are the Base file's default ("Government"-style) theme. Exact
+   per-step tints come from the Figma Tokens plugin / @opengovsg/design-system.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root {
+  /* ---- Font families -------------------------------------------------- */
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Roboto Mono', ui-monospace, monospace;
+
+  /* Inter is used with these OpenType features everywhere (gov.sg house style).
+     Apply via:  font-feature-settings: var(--font-features);  */
+  --font-features: 'cv01','cv02','cv03','cv04','cv05','cv09','cv10';
+  --font-features-tabular: 'tnum','cv01','cv02','cv03','cv04','cv05','cv09','cv10';
+
+  /* ====================================================================
+     GLOBAL PALETTE  (source colours — prefer the semantic tokens below)
+     ==================================================================== */
+
+  --standard-white: #ffffff;
+  --standard-black: #000000;
+
+  /* Brand primary / blue (default theme) — interaction lives here */
+  --blue-50:  #f7f9fe;
+  --blue-100: #e1ebfd;
+  --blue-200: #acc7fa;
+  --blue-300: #84a9f4;
+  --blue-400: #648bef;
+  --blue-500: #4a61c0;   /* dominant interactive colour across the file */
+  --blue-600: #3a476b;   /* solid primary button fill in the Base symbols */
+  --blue-700: #2c3354;
+  --blue-800: #293044;
+  --blue-900: #1d2236;
+
+  /* Grey / neutral */
+  --grey-50:  #f8f9f9;
+  --grey-100: #f0f0f1;
+  --grey-200: #e9e9e9;
+  --grey-300: #c9cccf;
+  --grey-400: #bfbfbf;
+  --grey-500: #686868;
+  --grey-600: #5d6785;
+  --grey-700: #454953;
+  --grey-800: #3d3d3d;
+  --grey-900: #2c2e34;
+
+  /* Green / success */
+  --green-50:  #e2eee8;
+  --green-100: #c0ddcd;
+  --green-500: #0f796f;
+  --green-600: #00774e;
+  --green-700: #0c5132;
+  --green-900: #003523;
+
+  /* Red / critical */
+  --red-50:  #fbe9e9;
+  --red-100: #f8d0cf;
+  --red-400: #ee4554;
+  --red-500: #c03434;
+  --red-600: #bb2929;
+  --red-900: #571717;
+
+  /* Yellow / warning */
+  --yellow-50:  #fef5d3;
+  --yellow-100: #fbe8b6;
+  --yellow-500: #f0a500;
+  --yellow-600: #cc8800;
+  --yellow-900: #3f2b00;
+
+  /* ====================================================================
+     SEMANTIC TOKENS  (USE THESE)
+     ==================================================================== */
+
+  /* Interaction — primary action / hierarchy (not necessarily the brand hue) */
+  --interaction-main-default: var(--blue-500);
+  --interaction-main-hover:   var(--blue-600);
+  --interaction-main-active:  var(--blue-700);
+  --interaction-main-subtle-default: var(--blue-50);
+  --interaction-main-subtle-hover:   var(--blue-100);
+  --interaction-sub-default:  var(--grey-700);
+  --interaction-sub-subtle:   var(--grey-100);
+  --interaction-critical-default: var(--red-500);
+  --interaction-critical-hover:   var(--red-600);
+  --interaction-muted-main-hover: var(--blue-100);
+
+  /* Base — surfaces, content, dividers */
+  --base-canvas-default:        var(--standard-white);
+  --base-canvas-alt:            var(--grey-50);
+  --base-canvas-backdrop:       var(--grey-100);
+  --base-canvas-overlay:        rgba(0, 0, 0, 0.65);
+  --base-content-strong:        var(--grey-900);   /* headings */
+  --base-content-default:       var(--grey-700);   /* body */
+  --base-content-medium:        var(--grey-600);
+  --base-content-light:         var(--grey-500);   /* captions, helper */
+  --base-content-inverse:       var(--standard-white);
+  --base-content-brand:         var(--interaction-main-default);
+  --base-divider-medium:        var(--grey-300);
+  --base-divider-subtle:        var(--grey-200);
+  --base-divider-strong:        var(--grey-400);
+
+  /* Utility — feedback, focus, links */
+  --utility-feedback-info:      var(--blue-500);
+  --utility-feedback-info-subtle:    var(--blue-50);
+  --utility-feedback-success:        var(--green-600);
+  --utility-feedback-success-subtle: var(--green-50);
+  --utility-feedback-warning:        var(--yellow-600);
+  --utility-feedback-warning-subtle: var(--yellow-50);
+  --utility-feedback-critical:       var(--red-500);
+  --utility-feedback-critical-subtle:var(--red-50);
+  --utility-focus-default:      #1361f0;   /* 3px focus ring */
+  --utility-link:               var(--interaction-main-default);
+
+  /* ====================================================================
+     RADII / BORDERS / SHADOW / SPACING
+     ==================================================================== */
+  --radius-sm:   4px;    /* default for buttons, inputs, cards, chips */
+  --radius-md:   8px;
+  --radius-lg:   16px;
+  --radius-xl:   32px;   /* large feature cards / hero panels */
+  --radius-full: 9999px; /* pills, avatars, tags */
+
+  --border-thin: 1px;
+  --focus-ring:  0 0 0 3px var(--utility-focus-default);
+
+  /* Soft, low-contrast elevation — OGP uses light shadows, never heavy drops */
+  --shadow-sm: 0 1px 4px 0 rgba(216, 216, 216, 0.5);
+  --shadow-md: 0 0 10px 0 rgba(191, 191, 191, 0.5);
+  --shadow-lg: 0 1px 10px 0 rgba(0, 0, 0, 0.1);
+
+  /* 4px base spacing scale (Chakra-derived) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+
+  /* Breakpoints (responsive type/layout switches here) */
+  --bp-mobile: 480px;    /* sm boundary */
+  --bp-desktop: 1280px;  /* lg boundary */
+}
+
+/* ============================================================================
+   TYPOGRAPHY
+   Two families of styles:
+   • FIXED  — constant size, for product/app pages where space is tight.
+   • RESPONSIVE — fluid display/heading sizes for landing pages (scale at
+     480px and 1280px breakpoints).
+   All Inter; tracking is tight & negative; display weights are Light (300),
+   headings Semibold (600), UI/body Medium (500) or Regular (400).
+   ========================================================================== */
+
+* { font-feature-settings: var(--font-features); }
+
+body {
+  font-family: var(--font-sans);
+  color: var(--base-content-default);
+  background: var(--base-canvas-default);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- FIXED product styles ------------------------------------------------ */
+.h1 { font: 600 40px/48px var(--font-sans); letter-spacing: -0.022em; color: var(--base-content-strong); }
+.h2 { font: 600 32px/40px var(--font-sans); letter-spacing: -0.022em; color: var(--base-content-strong); }
+.h3 { font: 600 24px/32px var(--font-sans); letter-spacing: -0.019em; color: var(--base-content-strong); }
+.h4 { font: 600 20px/28px var(--font-sans); letter-spacing: -0.014em; color: var(--base-content-strong); }
+.h5 { font: 600 18px/24px var(--font-sans); letter-spacing: -0.014em; color: var(--base-content-strong); }
+.h6 { font: 600 16px/24px var(--font-sans); letter-spacing: -0.011em; color: var(--base-content-strong); }
+
+.subhead    { font: 600 16px/24px var(--font-sans); letter-spacing: -0.011em; }
+.subhead-sm { font: 600 14px/20px var(--font-sans); letter-spacing: -0.006em; }
+
+.body-1 { font: 400 16px/24px var(--font-sans); letter-spacing: -0.011em; }
+.body-2 { font: 400 14px/20px var(--font-sans); letter-spacing: -0.006em; }
+
+/* ---- UTILITY styles ------------------------------------------------------ */
+.caption-1 { font: 500 14px/20px var(--font-sans); letter-spacing: -0.006em; color: var(--base-content-light); }
+.caption-2 { font: 400 12px/16px var(--font-sans); color: var(--base-content-light); }
+.legal     { font: 400 12px/16px var(--font-sans); color: var(--base-content-light); }
+.code      { font: 400 14px/20px var(--font-mono); }
+
+/* ---- RESPONSIVE display & heading (landing pages) ------------------------ */
+/* display-01 */
+.display-1 { font: 300 40px/48px var(--font-sans); letter-spacing: -0.022em; color: var(--base-content-strong); }
+/* display-02 */
+.display-2 { font: 300 40px/48px var(--font-sans); letter-spacing: -0.022em; color: var(--base-content-strong); }
+
+@media (min-width: 480px) {
+  .display-1 { font-size: 56px; line-height: 64px; }
+  .display-2 { font-size: 56px; line-height: 64px; }
+}
+@media (min-width: 1280px) {
+  .display-1 { font-size: 72px; line-height: 80px; }
+  .display-2 { font-size: 64px; line-height: 72px; }
+}

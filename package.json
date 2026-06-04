@@ -1,0 +1,36 @@
+{
+  "name": "ogo-design-system-skill",
+  "version": "1.0.0",
+  "description": "Claude Code skill for the OGP (Open Government Products) Base Design System — build accessible, on-brand Singapore Government digital product UI",
+  "main": "SKILL.md",
+  "keywords": [
+    "claude-code",
+    "claude-skill",
+    "ogp",
+    "open-government-products",
+    "singapore-government",
+    "design-system",
+    "govtech",
+    "formsg",
+    "isomer"
+  ],
+  "author": "Jay Demetillo <jasondemetillo@open.gov.sg>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaydemetillo/ogo-design-system-skill.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jaydemetillo/ogo-design-system-skill/issues"
+  },
+  "homepage": "https://github.com/jaydemetillo/ogo-design-system-skill#readme",
+  "files": [
+    "SKILL.md",
+    "README.md",
+    "references/",
+    "ui_kit/"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
+}

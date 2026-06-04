@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>OGP UI Kit</title>
+<link href="kit.css" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #f8f9f9; }
+  .topnav { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:14px 32px; background:#fff; border-bottom:1px solid #e9e9e9; }
+  .brand { display:flex; align-items:center; gap:10px; font:700 18px/1 'Inter'; letter-spacing:-0.014em; color:#2c2e34; }
+  .brand .mark { width:28px; height:28px; border-radius:6px; background:var(--primary); color:#fff; display:flex; align-items:center; justify-content:center; }
+  .wrap { max-width:760px; margin:0 auto; padding:32px 24px 80px; }
+  .stack { display:flex; flex-direction:column; }
+  .row { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+  .gallery { max-width:1080px; margin:0 auto; padding:8px 24px 80px; }
+  .swatchgrid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:20px; }
+  .sec-label { font:600 12px/16px 'Inter'; letter-spacing:.04em; text-transform:uppercase; color:#686868; margin:40px 0 14px; }
+</style>
+</head>
+<body class="ogp">
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="Kit.jsx"></script>
+<script type="text/babel">
+const { useState } = React;
+
+function App() {
+  const [tab, setTab] = useState("Apply");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [reason, setReason] = useState("");
+  const [agree, setAgree] = useState(false);
+  const [mode, setMode] = useState("Standard");
+  const [notify, setNotify] = useState(true);
+  const [submitted, setSubmitted] = useState(false);
+  const [toast, setToast] = useState(false);
+  const [confirm, setConfirm] = useState(false);
+  const [touched, setTouched] = useState(false);
+
+  const emailErr = touched && email && !/^[^@]+@[^@]+\.[^@]+$/.test(email) ? "Enter a valid email address" : "";
+
+  function submit() {
+    setTouched(true);
+    if (!name || !agree || emailErr) return;
+    setConfirm(true);
+  }
+
+  return (
+    <div>
+      <Banner icon="info-circle">A Singapore Government service · This is a demonstration UI kit, not a live form.</Banner>
+      <div className="topnav">
+        <div className="brand"><span className="mark"><Icon name="buildings" size={16} /></span> ServiceSG</div>
+        <div className="row">
+          <Link>Help</Link>
+          <Avatar initials="TC" />
+        </div>
+      </div>
+
+      <div className="wrap stack" style={{ gap: 24 }}>
+        <div>
+          <h1 className="ogp-h1">Apply for a grant</h1>
+          <p className="ogp-body" style={{ marginTop: 8 }}>Tell us about yourself and why you are applying. It takes about 5 minutes.</p>
+        </div>
+
+        <Tabs tabs={["Apply", "My applications", "FAQ"]} value={tab} onChange={setTab} />
+
+        {tab === "Apply" && (
+          <div className="stack" style={{ gap: 20 }}>
+            <Infobox tone="info">You can save a draft at any time. Fields marked optional can be left blank.</Infobox>
+
+            <Field label="Full name (as in NRIC)" htmlFor="n">
+              <Input id="n" value={name} placeholder="e.g. Tan Cheng" onChange={(e) => setName(e.target.value)} error={touched && !name} />
+              {touched && !name && <span className="field-error" style={{ marginTop: 4 }}><Icon name="error-circle" size={18} />This field is required</span>}
+            </Field>
+
+            <Field label="Email address" help="We'll send your reference number here." htmlFor="e" error={emailErr}>
+              <Input id="e" type="email" value={email} placeholder="you@example.gov.sg" onChange={(e) => setEmail(e.target.value)} onBlur={() => setTouched(true)} error={!!emailErr} />
+            </Field>
+
+            <Field label="Why are you applying?" optional help="Max 500 characters." htmlFor="r">
+              <Textarea id="r" value={reason} placeholder="Share a little about your situation…" onChange={(e) => setReason(e.target.value)} />
+            </Field>
+
+            <Field label="Preferred processing">
+              <div className="stack" style={{ gap: 10, marginTop: 4 }}>
+                <Radio name="mode" label="Standard — within 10 working days" checked={mode === "Standard"} onChange={() => setMode("Standard")} />
+                <Radio name="mode" label="Expedited — within 3 working days" checked={mode === "Expedited"} onChange={() => setMode("Expedited")} />
+              </div>
+            </Field>
+
+            <div className="row" style={{ justifyContent: "space-between", padding: "4px 0" }}>
+              <div><div className="field-label">Notify me of updates</div><div className="field-help">By email and SMS</div></div>
+              <Toggle checked={notify} onChange={() => setNotify(!notify)} />
+            </div>
+
+            <Checkbox label="I declare that the information given is true and complete." checked={agree} onChange={() => setAgree(!agree)} />
+            {touched && !agree && <span className="field-error"><Icon name="error-circle" size={18} />You must accept the declaration to continue</span>}
+
+            <div className="row" style={{ marginTop: 8 }}>
+              <Button variant="solid" onClick={submit}>Submit application</Button>
+              <Button variant="clear">Save draft</Button>
+            </div>
+          </div>
+        )}
+
+        {tab === "My applications" && (
+          <div className="stack" style={{ gap: 16 }}>
+            {submitted && (
+              <Card>
+                <div className="row" style={{ justifyContent: "space-between" }}>
+                  <div><h3 className="ogp-h3">Grant application</h3><p className="ogp-small" style={{ marginTop: 4 }}>Submitted just now · Ref #SG-4827</p></div>
+                  <Badge tone="warning">Under review</Badge>
+                </div>
+              </Card>
+            )}
+            <Card>
+              <div className="row" style={{ justifyContent: "space-between" }}>
+                <div><h3 className="ogp-h3">Address change</h3><p className="ogp-small" style={{ marginTop: 4 }}>Submitted 12 May · Ref #SG-4012</p></div>
+                <Badge tone="success">Approved</Badge>
+              </div>
+            </Card>
+            {!submitted && <p className="ogp-small">Submit the form under “Apply” to see it appear here.</p>}
+          </div>
+        )}
+
+        {tab === "FAQ" && (
+          <div className="stack" style={{ gap: 12 }}>
+            <Accordion title="Who is eligible to apply?" defaultOpen>Singapore citizens and permanent residents aged 21 and above may apply. You will need a valid email address.</Accordion>
+            <Accordion title="How long does processing take?">Standard applications are processed within 10 working days. Expedited applications within 3.</Accordion>
+            <Accordion title="Can I edit a submitted application?">You can withdraw and resubmit within 24 hours. After that, contact our help desk.</Accordion>
+          </div>
+        )}
+      </div>
+
+      {/* ---- Component gallery ---- */}
+      <div className="gallery">
+        <div className="sec-label">Component library</div>
+
+        <div className="sec-label">Buttons</div>
+        <div className="row">
+          <Button variant="solid">Solid</Button>
+          <Button variant="outline">Outline</Button>
+          <Button variant="clear">Clear</Button>
+          <Button variant="neutral">Neutral</Button>
+          <Button variant="critical">Delete</Button>
+          <Button variant="solid" disabled>Disabled</Button>
+          <Button variant="solid" size="sm">Small</Button>
+          <Button variant="solid" size="lg" icon="arrow-right">Large</Button>
+          <IconButton icon="cog" />
+        </div>
+
+        <div className="sec-label">Status</div>
+        <div className="row">
+          <Badge tone="success">Approved</Badge>
+          <Badge tone="warning">Pending</Badge>
+          <Badge tone="critical">Rejected</Badge>
+          <Badge tone="info">Draft</Badge>
+          <Tag>Healthcare</Tag>
+          <Tag grey>Archived</Tag>
+        </div>
+
+        <div className="sec-label">Feedback</div>
+        <div className="stack" style={{ gap: 12, maxWidth: 560 }}>
+          <Infobox tone="success">Your application was submitted successfully.</Infobox>
+          <Infobox tone="warning">Your session will expire in 5 minutes.</Infobox>
+          <Infobox tone="critical">We couldn’t process your payment. Please try again.</Infobox>
+        </div>
+
+        <div className="sec-label">Tiles</div>
+        <div className="swatchgrid">
+          <Tile icon="file" title="Forms" desc="Build and publish secure government forms." />
+          <Tile icon="world" title="Sites" desc="Create static informational websites." />
+          <Tile icon="lock" title="Vault" desc="Share classified files securely." />
+        </div>
+      </div>
+
+      {confirm && (
+        <Modal title="Submit application?" onClose={() => setConfirm(false)}
+          footer={<>
+            <Button variant="neutral" onClick={() => setConfirm(false)}>Cancel</Button>
+            <Button variant="solid" onClick={() => { setConfirm(false); setSubmitted(true); setToast(true); setTab("My applications"); }}>Yes, submit</Button>
+          </>}>
+          Once submitted you will receive a reference number by email. You can withdraw within 24 hours.
+        </Modal>
+      )}
+      {toast && (
+        <div style={{ position: "fixed", bottom: 24, right: 24, zIndex: 60 }}>
+          <Toast onClose={() => setToast(false)}>Application submitted — reference #SG-4827.</Toast>
+        </div>
+      )}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>
