@@ -1,0 +1,76 @@
+---
+description: Apply OGP (Open Government Products) Base Design System rules when building UI, components, forms, landing pages, or any Singapore Government digital product interface.
+globs: ["**/*.tsx", "**/*.jsx", "**/*.css", "**/*.html", "**/*.scss"]
+alwaysApply: false
+---
+
+# OGP Base Design System
+
+The design system behind FormSG, Isomer, Vault, Redeem, and ScamShield. Accessible, calm, high-contrast, no-nonsense government UI.
+
+## Non-negotiable rules
+
+- **Semantic tokens only** — never raw hex. Use `--interaction-main-default`, `--base-content-strong`, `--utility-feedback-critical`, etc.
+- **Themeable** — one `--primary` override cascades to all components. Don't hardcode brand colour.
+- **Accessibility is the floor** — WCAG AA minimum, always-visible 3 px `#1361F0` focus ring, ≥ 44 px touch targets, labelled form fields with explicit error messages.
+- **No gradients, no emoji as icons, no heavy shadows.** Flat fills, 1 px subtle borders, soft diffuse elevation only.
+- **Sentence case for all labels, headings, and buttons.**
+
+## Colour tokens (semantic — use these)
+
+| Token | Value | Use |
+|---|---|---|
+| `--interaction-main-default` | `#4A61C0` | Primary buttons, links, active states |
+| `--interaction-main-hover` | `#3A476B` | Hover |
+| `--base-content-strong` | `#2C2E34` | Headings |
+| `--base-content-default` | `#454953` | Body text |
+| `--base-content-light` | `#686868` | Captions, helper text |
+| `--base-canvas-default` | `#FFFFFF` | Page background |
+| `--base-canvas-alt` | `#F8F9F9` | Panel / alternate background |
+| `--base-divider-subtle` | `#E9E9E9` | Borders, hairlines |
+| `--utility-feedback-success` | `#00774E` | Success |
+| `--utility-feedback-warning` | `#CC8800` | Warning |
+| `--utility-feedback-critical` | `#C03434` | Error / destructive |
+| `--utility-focus-default` | `#1361F0` | Focus ring |
+
+## Typography
+
+- **Font:** Inter everywhere, IBM Plex Mono for code.
+- **Features:** always set `font-feature-settings: 'cv01','cv02','cv03','cv04','cv05','cv09','cv10'`
+- **Tracking:** negative on all sizes (–0.6 % to –2.2 %)
+- **Product UI:** fixed Semibold (600) headings — `h1` 40/48, `h2` 32/40, `h3` 24/32, `h4` 20/28. Regular (400) body at 16/24.
+- **Landing pages:** responsive Light (300) display — scales 40 → 56 → 72 px at 480 px and 1280 px breakpoints.
+
+## Spacing & shape
+
+- **4 px base scale:** 4, 8, 12, 16, 24, 32, 40, 48, 64, 80
+- **Radii:** `4px` buttons/inputs/cards · `32px` hero panels · `9999px` pills/avatars
+- **Borders:** 1 px in `--base-divider-subtle`
+- **Shadows:** `0 0 10px rgba(191,191,191,0.5)` max; many surfaces use border-only
+
+## Components (quick spec)
+
+**Button (md):** height 44 px · radius 4 px · padding 10 px 16 px · Inter Medium 16/24 · appearances: `solid` / `outline` / `clear` · colours: `main` / `sub` / `critical`
+
+**Input:** 1 px border · 4 px radius · 44 px height · 16 px text · error state uses `--utility-feedback-critical` border + message below
+
+**FormControl pattern:** visible label → input → helper text or error message. Every field must have a label. Optional fields labelled "(optional)".
+
+**Icons:** BoxIcons line set only. Inline SVG in React, `<i class="bx bx-*">` in HTML. No hand-drawn icons, no icon fonts from CDN, no emoji.
+
+## Voice
+
+- Citizen = "you" · Agency = "we"
+- Plain, direct, calm. No hype, no exclamation marks.
+- "Submit", "Save draft", "Log in" — short imperative buttons.
+
+## Re-theming
+
+Override the `--blue-*` scale in `:root` — semantic tokens and all components follow automatically.
+
+## Files in this repo
+
+- `references/colors_and_type.css` — all CSS custom properties + typography classes. Import or copy into any project.
+- `ui_kit/Kit.jsx` + `ui_kit/kit.css` — ready-to-use React components.
+- `ui_kit/index.html` — interactive demo (no build step required).
+- `references/design.md` — complete design guide with full token tables and component specs.

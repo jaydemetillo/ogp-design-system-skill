@@ -1,21 +1,119 @@
-# OGP Base Design System — Claude Code Skill
+# OGP Base Design System — AI Coding Agent Instructions
 
-A portable, plug-and-play Claude Code skill that gives Claude a complete working knowledge of the **OGP (Open Government Products) Base Design System** — the shared, accessible design foundation behind Singapore Government digital products like FormSG, Isomer, Vault, Redeem, and ScamShield.
+Plug-and-play instructions for AI coding agents that make Claude Code, Cursor, and OpenAI Codex produce UI that matches the **OGP (Open Government Products) Base Design System** — the shared, accessible design foundation behind Singapore Government digital products: FormSG, Isomer, Vault, Redeem, and ScamShield.
 
-> **Status:** Experimental personal test skill. Not an official OGP / Singapore Government release.
+> **Status:** Experimental personal packaging. Not an official OGP / Singapore Government release.
 
 ---
 
-## What this skill does
+## What this gives you
 
-When activated, Claude will generate UI, prototypes, mocks, forms, slides, and landing pages that faithfully match the OGP visual language — correct colour tokens, Inter typography, 4 px spacing scale, accessible components, and the calm, plain-language voice used across gov.sg products.
+Once installed for your tool of choice, your AI assistant will:
 
-Claude will:
-- **Use semantic colour tokens** (`interaction.main`, `base.content.strong`, `utility.feedback.critical`) — never raw hex
-- **Set type in Inter** with the correct OpenType features, weights, and negative letter-spacing; IBM Plex Mono for code
-- **Build accessible components** — 3 px focus rings, ≥ 44 px touch targets, labelled form fields with explicit error messages, WCAG AA contrast throughout
+- Use **semantic colour tokens** (`--interaction-main-default`, `--base-content-strong`, `--utility-feedback-critical`) — never raw hex
+- Set type in **Inter** with correct OpenType features, weights, and negative letter-spacing; IBM Plex Mono for code
+- Build **accessible components** — 3 px focus rings, ≥ 44 px touch targets, labelled form fields with explicit error messages, WCAG AA contrast throughout
+- Follow **OGP voice and tone** — sentence case, plain language, "you" for the citizen, "we" for the agency
 - **Re-theme on demand** — overriding one `--primary` variable cascades to every component
-- **Output self-contained HTML artifacts** using the bundled CSS tokens and `ui_kit/` components
+- Output self-contained HTML artifacts or production React using the bundled CSS tokens and `ui_kit/` components
+
+---
+
+## Install
+
+### Claude Code
+
+**Option A — Plugin (recommended)**
+
+```bash
+claude plugin install git@github.com:jaydemetillo/ogo-design-system-skill.git
+```
+
+Then activate in any conversation:
+```
+/ogp-design-test-skill
+```
+
+**Option B — Copy into project**
+
+```bash
+mkdir -p .claude/skills/ogp-design-test-skill
+git clone --depth 1 git@github.com:jaydemetillo/ogo-design-system-skill.git /tmp/ogp-skill
+cp -r /tmp/ogp-skill/{SKILL.md,references,ui_kit} .claude/skills/ogp-design-test-skill/
+```
+
+**Option C — Zip download**
+
+Download [`ogp-design-system-skill-v1.0.0.zip`](https://github.com/jaydemetillo/ogo-design-system-skill/releases/latest) from Releases, then:
+
+```bash
+unzip ogp-design-system-skill-v1.0.0.zip -d .claude/skills/ogp-design-test-skill/
+```
+
+---
+
+### Cursor
+
+**Option A — Copy rule file into your project (recommended)**
+
+```bash
+mkdir -p .cursor/rules
+curl -fsSL https://raw.githubusercontent.com/jaydemetillo/ogo-design-system-skill/main/.cursor/rules/ogp-design-system.mdc \
+  -o .cursor/rules/ogp-design-system.mdc
+```
+
+The rule auto-attaches whenever you open `.tsx`, `.jsx`, `.css`, `.scss`, or `.html` files. No further setup needed.
+
+**Option B — Clone and copy**
+
+```bash
+git clone --depth 1 git@github.com:jaydemetillo/ogo-design-system-skill.git /tmp/ogp-skill
+mkdir -p .cursor/rules
+cp /tmp/ogp-skill/.cursor/rules/ogp-design-system.mdc .cursor/rules/
+```
+
+**Option C — Global rules (applies to all Cursor projects)**
+
+1. Open Cursor → **Settings → Cursor Settings → Rules**
+2. Click **Add rule** and paste the contents of [`.cursor/rules/ogp-design-system.mdc`](.cursor/rules/ogp-design-system.mdc)
+
+Commit the `.cursor/rules/` folder to your repository so your whole team gets the same AI behaviour.
+
+---
+
+### OpenAI Codex CLI
+
+**Option A — Project-level (this repo or your project)**
+
+```bash
+# From your project root
+curl -fsSL https://raw.githubusercontent.com/jaydemetillo/ogo-design-system-skill/main/AGENTS.md \
+  -o AGENTS.md
+```
+
+Codex automatically reads `AGENTS.md` from the Git root and any parent directory down to your working directory.
+
+**Option B — Global (all Codex projects)**
+
+```bash
+mkdir -p ~/.codex
+curl -fsSL https://raw.githubusercontent.com/jaydemetillo/ogo-design-system-skill/main/AGENTS.md \
+  -o ~/.codex/AGENTS.md
+```
+
+**Option C — Clone and copy**
+
+```bash
+git clone --depth 1 git@github.com:jaydemetillo/ogo-design-system-skill.git /tmp/ogp-skill
+
+# Project-level
+cp /tmp/ogp-skill/AGENTS.md ./AGENTS.md
+
+# — or global —
+mkdir -p ~/.codex && cp /tmp/ogp-skill/AGENTS.md ~/.codex/AGENTS.md
+```
+
+> If you already have an `AGENTS.md` in your project, append the contents of this repo's `AGENTS.md` to it rather than overwriting.
 
 ---
 
@@ -23,60 +121,22 @@ Claude will:
 
 ```
 ogo-design-system-skill/
-├── README.md                     ← you are here
-├── SKILL.md                      ← Claude Code skill entry point
+├── README.md                              ← you are here
+├── SKILL.md                               ← Claude Code skill entry point
+├── AGENTS.md                              ← OpenAI Codex CLI instructions
+├── .cursor/
+│   └── rules/
+│       └── ogp-design-system.mdc          ← Cursor rule (auto-attaches to UI files)
 ├── references/
-│   ├── design.md                 ← full design guide (colour, type, spacing, components, voice)
-│   └── colors_and_type.css       ← CSS custom properties + typography utility classes
-└── ui_kit/
-    ├── Kit.jsx                   ← React component library + inline-SVG Icon
-    ├── kit.css                   ← component styles (one --primary slot for theming)
-    ├── index.html                ← working interactive demo (no build step required)
-    └── README.md                 ← kit load-order notes
+│   ├── design.md                          ← full design guide
+│   └── colors_and_type.css                ← CSS custom properties + type classes
+├── ui_kit/
+│   ├── Kit.jsx                            ← React components + inline-SVG Icon
+│   ├── kit.css                            ← component styles (one --primary slot)
+│   ├── index.html                         ← interactive demo, no build step
+│   └── README.md                          ← kit load-order notes
+└── package.json
 ```
-
----
-
-## Quick install
-
-### Option A — Claude Code plugin (recommended)
-
-Install this repository as a Claude Code plugin so the skill is always available in your projects.
-
-```bash
-# In your project root
-claude plugin install git@github.com:jaydemetillo/ogo-design-system-skill.git
-```
-
-Then in any conversation type `/ogp-design-test-skill` to activate it.
-
-### Option B — Copy into project
-
-Copy the skill files into your project's `.claude/skills/` folder:
-
-```bash
-mkdir -p .claude/skills/ogp-design-test-skill
-cp -r references ui_kit SKILL.md .claude/skills/ogp-design-test-skill/
-```
-
-### Option C — Use the zip
-
-Download the `ogp-design-system-skill-v1.0.0.zip` from [Releases](https://github.com/jaydemetillo/ogo-design-system-skill/releases) and unzip it into `.claude/skills/`.
-
----
-
-## Using the skill
-
-Once installed, start a Claude conversation and say something like:
-
-- *"Build me a FormSG-style contact form"*
-- *"Create an OGP landing page for a government digital service"*
-- *"Restyle this dashboard to look like a gov.sg product"*
-- *"Generate an accessible OGP badge / tag / alert component"*
-
-Claude will read `SKILL.md` → `references/design.md` → `references/colors_and_type.css`, then produce pixel-accurate, accessible HTML or React output.
-
-If invoked with no brief, Claude will ask scoping questions (product UI vs landing page, which product/theme, desired variations) before designing.
 
 ---
 
@@ -84,120 +144,110 @@ If invoked with no brief, Claude will ask scoping questions (product UI vs landi
 
 ### Colour
 
-The system is **semantic-token-first**. Two layers:
-
-| Layer | Example | Rule |
-|---|---|---|
-| Global palette | `--blue-500: #4A61C0` | Source of truth. Never apply directly. |
-| Semantic tokens | `--interaction-main-default: var(--blue-500)` | Always use these in components. |
-
-Key semantic roles:
+The system is **semantic-token-first**. Two layers — global palette (source, never apply directly) and semantic tokens (always use in components):
 
 | Token | Default | Use |
 |---|---|---|
 | `--interaction-main-default` | `#4A61C0` | Primary buttons, links, active states |
-| `--interaction-main-hover` | `#3A476B` | Hover state |
+| `--interaction-main-hover` | `#3A476B` | Hover |
+| `--interaction-main-active` | `#2C3354` | Pressed / active |
 | `--base-content-strong` | `#2C2E34` | Headings |
 | `--base-content-default` | `#454953` | Body text |
+| `--base-content-light` | `#686868` | Captions, helper text |
 | `--base-canvas-default` | `#FFFFFF` | Page background |
+| `--base-canvas-alt` | `#F8F9F9` | Panel / alternate surface |
 | `--base-divider-subtle` | `#E9E9E9` | Borders, hairlines |
+| `--base-divider-medium` | `#C9CCCF` | Stronger borders |
+| `--utility-feedback-success` | `#00774E` | Success |
+| `--utility-feedback-warning` | `#CC8800` | Warning |
 | `--utility-feedback-critical` | `#C03434` | Error / destructive |
 | `--utility-focus-default` | `#1361F0` | 3 px keyboard focus ring |
 
-Full scale and all tokens in [`references/colors_and_type.css`](references/colors_and_type.css).
+Full global palette and all tokens → [`references/colors_and_type.css`](references/colors_and_type.css)
 
 ### Typography
 
 **One typeface: Inter** (with `cv01–cv10` OpenType features). IBM Plex Mono for code. Tracking is uniformly negative.
-
-Two style families:
 
 | Family | When | Weight |
 |---|---|---|
 | Fixed (`.h1`–`.h6`, `.body-1`, `.body-2`) | Product / app pages | Semibold headings, Regular body |
 | Responsive (`.display-1`, `.display-2`) | Landing / marketing pages | Light (300), scales at 480 px and 1280 px |
 
-Minimum body text: 14 px. Minimum product text: 16 px.
+Key fixed sizes: `h1` 40/48 · `h2` 32/40 · `h3` 24/32 · `h4` 20/28 · `body-1` Regular 16/24 · `body-2` Regular 14/20
 
-### Spacing & radii
+### Spacing, radii, and elevation
 
-- **Spacing:** 4 px base scale — `4, 8, 12, 16, 24, 32, 40, 48, 64, 80`
-- **Radii:** `4 px` (buttons, inputs, cards) · `8–16 px` (larger cards) · `32 px` (hero panels) · `full` (pills, avatars)
-- **Borders:** `1 px` in `--base-divider-subtle` / `--base-divider-medium`
-- **Elevation:** soft, diffuse shadows only — `0 0 10px rgba(191,191,191,0.5)`. Many surfaces use a border instead of a shadow.
-- **No gradients** in product UI.
+| Property | Values |
+|---|---|
+| Spacing scale | 4 · 8 · 12 · 16 · 24 · 32 · 40 · 48 · 64 · 80 px |
+| Radii | 4 px (default) · 8–16 px (large cards) · 32 px (hero) · 9999 px (pills) |
+| Borders | 1 px in `--base-divider-subtle` or `--base-divider-medium` |
+| Shadows | Soft, diffuse only — `0 0 10px rgba(191,191,191,0.5)`. Many surfaces use border instead. No heavy drops. |
+| Gradients | None in product UI |
 
-### Components
-
-The `ui_kit/Kit.jsx` ships these components:
+### Components (`ui_kit/Kit.jsx`)
 
 | Component | Variants |
 |---|---|
-| `Button` | `solid` / `outline` / `clear`; `main` / `sub` / `critical`; `xs` / `sm` / `md` / `lg` |
-| `Badge` / `Tag` | Colour-coded status chips |
-| `Input` / `Textarea` | With error state, helper text |
-| `FormControl` | Label + input + helper/error |
+| `Button` | `solid` / `outline` / `clear` × `main` / `sub` / `critical` × `xs` / `sm` / `md` / `lg` |
+| `Input` / `Textarea` | With error state and helper text |
+| `FormControl` | Label + input + helper/error (the standard form pattern) |
 | `Checkbox` / `Radio` | OGP-styled, accessible |
+| `Badge` / `Tag` | Colour-coded status chips |
 | `Card` | Subtle border + light shadow |
 | `Infobox` | Info / Warning / Error callout |
-| `Icon` | Inline-SVG BoxIcons (no CDN dependency) |
+| `Icon` | Inline-SVG BoxIcons — no CDN or font dependency |
 | `NavBar` | Product top navigation |
 | `Footer` | Standard gov.sg footer |
 
-### Iconography
-
-Icons are **BoxIcons** (line style). The `Icon` component in `Kit.jsx` includes authentic SVG paths — no external font or CDN required. Do not use emoji as icons.
-
-### Voice & tone
+### Voice and tone
 
 | Rule | Example |
 |---|---|
-| Address citizens as "you" | "Your application has been submitted." |
-| Refer to the agency as "we" | "We will review your request within 3 working days." |
+| Citizen = "you" | "Your application has been submitted." |
+| Agency = "we" | "We will respond within 3 working days." |
 | Sentence case everywhere | "Submit application" not "Submit Application" |
 | Short imperative buttons | "Submit", "Save draft", "Log in" |
 | No hype or exclamation marks | — |
 
----
+### Accessibility requirements
 
-## Re-theming
+- WCAG AA contrast minimum for all text (≥ 4.5:1 body, ≥ 3:1 large text)
+- 3 px focus ring in `#1361F0` — always visible on keyboard focus, never `outline: none`
+- ≥ 44 px touch targets on mobile
+- Every form field has a visible label (not just placeholder text)
+- Error messages are explicit and appear below the field
+- No decorative emoji in UI
 
-Override the `--blue-*` scale (and optionally `--primary`) in `:root` — all semantic tokens and components follow automatically:
+### Re-theming
+
+Override the `--blue-*` scale in `:root`. All semantic tokens and every component re-theme automatically:
 
 ```css
 :root {
-  /* Example: re-theme to a green brand */
-  --blue-500: #00774E;
-  --blue-600: #0c5132;
-  --blue-100: #c0ddcd;
-  --blue-50:  #e2eee8;
+  /* Example: ScamShield red theme */
+  --blue-500: #C03434;
+  --blue-600: #9B2727;
+  --blue-100: #FBE9E9;
+  --blue-50:  #FEF2F2;
 }
 ```
 
 ---
 
-## Accessibility requirements (non-negotiable)
-
-- **WCAG AA** contrast for all text — AA is the floor, not a target
-- **3 px focus ring** in `#1361F0` — always visible on keyboard focus, never hidden with `outline: none`
-- **≥ 44 px touch targets** on mobile
-- **Labelled form fields** — every input has a visible label, helper text, and an explicit error message
-- **No decorative emoji** in UI
-
----
-
 ## Relationship to `@opengovsg/design-system`
 
-This skill mirrors the token naming conventions of the public [`@opengovsg/design-system`](https://github.com/opengovsg/design-system) npm package (a Chakra UI theme). For production React apps, use that package. This skill is optimised for **rapid AI-assisted prototyping** — self-contained HTML/JSX with no build pipeline.
+This repository mirrors the token naming of the public [`@opengovsg/design-system`](https://github.com/opengovsg/design-system) npm package (a Chakra UI theme). For production React apps, use that package directly. This repo is optimised for **AI-assisted prototyping** — zero-dependency HTML/JSX that any AI coding agent can generate without a build pipeline.
 
 ---
 
 ## Contributing
 
-This is an experimental personal skill. Issues and pull requests are welcome. If you work at OGP and would like to adopt or extend this, feel free to reach out.
+Issues and pull requests welcome. If you work at OGP and want to adopt, extend, or keep this in sync with the official design system, feel free to reach out.
 
 ---
 
 ## License
 
-Experimental — personal test skill, not an official OGP release. The OGP Design System itself belongs to Open Government Products / GovTech Singapore.
+MIT. The OGP Design System itself belongs to Open Government Products / GovTech Singapore.
